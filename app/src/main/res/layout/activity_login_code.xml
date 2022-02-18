@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_layout_common_toolbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="输入验证码"
+        android:textSize="22sp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/margin_width"/>
+
+    <EditText
+        android:id="@+id/code_edit"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:layout_marginTop="@dimen/margin_width"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:inputType="number"
+        android:background="#333333"/>
+
+    <TextView
+        android:id="@+id/resend_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重新获取"
+        android:layout_marginStart="@dimen/margin_width"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/btn_color"/>
+
+    <com.buzz.vpn.widge.WJTextView
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="登录"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:layout_marginTop="32dp"
+        app:wj_corner_radius="6dp"
+        app:wj_solid_color="@color/btn_color"/>
+
+</LinearLayout>

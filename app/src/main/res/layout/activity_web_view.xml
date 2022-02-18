@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".common.WebViewActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navigation_bar_height">
+
+        <ImageButton
+            android:id="@+id/ib_toolbar_back"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/ic_app_icon" />
+
+        <TextView
+            android:id="@+id/ib_toolbar_close"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/ib_toolbar_back"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="关闭"
+            android:textSize="15sp"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/tv_toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="@dimen/navigation_bar_height"
+            android:layout_marginStart="@dimen/navigation_bar_height"
+            android:gravity="center"
+            android:paddingEnd="@dimen/navigation_bar_height"
+            android:paddingStart="@dimen/navigation_bar_height"
+            android:singleLine="true"
+            android:textColor="#333333"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="#1A4F4F4F" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+
+</LinearLayout>

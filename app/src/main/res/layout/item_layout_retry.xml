@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_app_icon"/>
+
+    <TextView
+        android:id="@+id/error_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="网络数据出错，请检查您的网络"
+        android:textSize="14sp"
+        android:textColor="#A6B0BD"
+        android:layout_marginTop="-50dp"
+        android:layout_marginHorizontal="20dp"/>
+
+    <com.buzz.vpn.widge.WJTextView
+        android:id="@+id/retry_btn"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:text="重新加载"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        app:wj_solid_color="#7A8399"
+        app:wj_corner_radius="20dp"/>
+
+    <TextView
+        android:id="@+id/back_btn"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:textSize="14sp"
+        android:textColor="#7A8399"
+        android:text="返回上一层"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
+
+</LinearLayout>

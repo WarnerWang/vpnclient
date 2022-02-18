@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/backgroundColor</item>
+        <item name="colorPrimaryDark">@color/backgroundColor</item>
+        <item name="colorAccent">@color/backgroundColor</item>
+        <item name="android:windowTranslucentStatus">true</item><!--这行代码使布局占据状态栏空间-->
+        <item name="android:windowBackground">@color/backgroundColor</item>
+    </style>
+
+
+</resources>

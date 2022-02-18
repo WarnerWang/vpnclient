@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/backgroundColor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="@dimen/padding">
+
+        <ImageView
+            android:id="@+id/user_header_icon"
+            android:layout_width="@dimen/app_icon_width"
+            android:layout_height="@dimen/app_icon_width"
+            android:layout_marginLeft="@dimen/margin_width"
+            android:src="@drawable/ic_app_google"/>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp"
+            android:layout_toRightOf="@+id/user_header_icon"
+            android:layout_alignTop="@+id/user_header_icon"
+            android:layout_marginLeft="@dimen/padding"/>
+
+        <TextView
+            android:id="@+id/user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:textColor="@color/colorWhite"
+            android:textSize="14dp"
+            android:layout_toRightOf="@+id/user_header_icon"
+            android:layout_alignBottom="@+id/user_header_icon"
+            android:layout_marginLeft="@dimen/padding"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:background="@drawable/background_corner">
+
+        <include android:id="@+id/cell_protocol"
+            layout="@layout/item_layout_mine_cell"/>
+
+        <include android:id="@+id/cell_provacy"
+            layout="@layout/item_layout_mine_cell"/>
+
+    </LinearLayout>
+
+    <com.buzz.vpn.widge.WJTextView
+        android:id="@+id/logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:text="退出登录"
+        android:textColor="#FF3B30"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/padding"
+        app:wj_corner_radius="8dp"
+        android:gravity="center"
+        app:wj_solid_color="@color/app_cell_background"/>
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navigation_bar_height"
+    android:background="@color/backgroundColor">
+    <!--?android:attr/actionBarSize-->
+
+    <TextView
+        android:id="@+id/tv_toolbar_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/navigation_bar_height"
+        android:layout_marginStart="@dimen/navigation_bar_height"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/ib_toolbar_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:scaleType="center"
+        android:layout_marginLeft="5dp"
+        android:src="@mipmap/back_row" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="#1A4F4F4F" />
+
+    <TextView
+        android:id="@+id/nav_right_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@color/transparent"
+        android:paddingHorizontal="15dp"
+        android:gravity="center"
+        android:text="反馈"
+        android:textColor="@color/btn_color"
+        android:textSize="14dp"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

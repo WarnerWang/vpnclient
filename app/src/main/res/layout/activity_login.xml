@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include android:id="@+id/nav_bar"
+        layout="@layout/item_layout_common_toolbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="登录开始加速"
+        android:textSize="22sp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/margin_width"/>
+    
+    <EditText
+        android:id="@+id/phone_edit"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:layout_marginTop="@dimen/margin_width"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:numeric="integer"
+        android:background="#333333"/>
+    
+    <com.buzz.vpn.widge.WJTextView
+        android:id="@+id/send_code_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="获取验证码"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:layout_marginTop="32dp"
+        app:wj_corner_radius="6dp"
+        app:wj_solid_color="@color/btn_color"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_width"
+        android:layout_marginTop="32dp">
+        
+        <ImageButton
+            android:id="@+id/choose_btn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            />
+
+        <TextView
+            android:id="@+id/desc_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我已阅读并同意《联通账号认证服务条款》和《服务条款/隐私条款》"
+            android:textColor="#FFFFFF66"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"/>
+        
+    </LinearLayout>
+
+</LinearLayout>

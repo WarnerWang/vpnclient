@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ts_H5">24sp</dimen>
+    <dimen name="ts_H6">20sp</dimen>
+    <dimen name="ts_Subtitle1">16sp</dimen>
+    <dimen name="ts_Subtitle2">14sp</dimen>
+
+    <dimen name="ts_Body1">16sp</dimen>
+    <dimen name="ts_Body2">14sp</dimen>
+    <dimen name="ts_BUTTON">14sp</dimen>
+    <dimen name="ts_Caption">12sp</dimen>
+    <dimen name="ts_OVERLINE">10sp</dimen>
+
+    <dimen name="lo_2dpGrid">2dp</dimen>
+    <dimen name="lo_4dpGrid">4dp</dimen>
+    <dimen name="lo_8dpGrid">8dp</dimen>
+    <dimen name="lo_10dpGrid">10dp</dimen>
+    <dimen name="lo_12dpGrid">12dp</dimen>
+    <dimen name="lo_16dpGrid">16dp</dimen>
+    <dimen name="lo_20dpGrid">20dp</dimen>
+    <dimen name="lo_24dpGrid">24dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="navigation_bar_height">60dp</dimen>
+<!--    <dimen name="navigation_bar_height">80dp</dimen>-->
+
+    <dimen name="match_detail_data_text_font">12dp</dimen>
+
+    <dimen name="status_bar_height">20dp</dimen>
+
+    <dimen name="top_bar_height">68dp</dimen>
+
+    <dimen name="padding">16dp</dimen>
+    <dimen name="margin_width">24dp</dimen>
+    <dimen name="cell_icon_width">30dp</dimen>
+    <dimen name="app_icon_width">60dp</dimen>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/background_corner">
+
+        <ImageView
+            android:id="@+id/app_icon"
+            android:layout_width="@dimen/app_icon_width"
+            android:layout_height="@dimen/app_icon_width"
+            android:layout_marginTop="@dimen/padding"
+            android:src="@mipmap/ic_app_icon"/>
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/padding"
+            android:text="应用名称"
+            android:gravity="center_horizontal"/>
+
+        <com.buzz.vpn.widge.WJTextView
+            android:id="@+id/accelerate_btn"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:text="加速"
+            android:textSize="14sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/padding"
+            android:layout_marginBottom="@dimen/padding"
+            app:wj_solid_color="@color/btn_color"
+            app:wj_corner_radius="15dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

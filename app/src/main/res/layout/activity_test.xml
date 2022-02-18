@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="stop" />
+
+        <Button
+            android:id="@+id/btn_usage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="usage" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_app_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="运行状态日志"
+        android:maxLines="5"
+        android:inputType="textMultiLine"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="运行状态日志"
+        android:layout_marginTop="10dp"
+        android:maxLines="5"
+        android:inputType="textMultiLine"
+        android:textColor="@color/colorWhite"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_running_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="运行状态"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center_horizontal"/>
+
+</LinearLayout>
