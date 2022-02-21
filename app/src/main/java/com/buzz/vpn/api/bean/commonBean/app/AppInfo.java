@@ -31,7 +31,7 @@ public class AppInfo extends BaseEntity {
     private String bundleId;
 
     @JSONField(serialize = false)
-    private Drawable appDrawable;
+    private SeriDrawable appDrawable;
 
     public String getApplicationInfoId() {
         return applicationInfoId;
@@ -105,11 +105,11 @@ public class AppInfo extends BaseEntity {
         this.bundleId = bundleId;
     }
 
-    public Drawable getAppDrawable() {
+    public SeriDrawable getAppDrawable() {
         return appDrawable;
     }
 
-    public void setAppDrawable(Drawable appDrawable) {
+    public void setAppDrawable(SeriDrawable appDrawable) {
         this.appDrawable = appDrawable;
     }
 }

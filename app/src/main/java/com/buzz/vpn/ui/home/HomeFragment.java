@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.buzz.vpn.R;
+import com.buzz.vpn.api.bean.commonBean.app.SeriDrawable;
 import com.buzz.vpn.databinding.FragmentHomeBinding;
+import com.buzz.vpn.manager.IperfManager;
 import com.buzz.vpn.ui.accelerate.AccelerateActivity;
 import com.buzz.vpn.api.bean.commonBean.app.AppInfo;
 import com.buzz.vpn.api.bean.req.app.AccelerateAppListReq;
@@ -20,6 +22,7 @@ import com.buzz.vpn.base.BaseFragment;
 import com.buzz.vpn.utils.AppUtil;
 import com.buzz.vpn.utils.Logger;
 import com.buzz.vpn.utils.ScreenUtils;
+import com.buzz.vpn.utils.TokenCache;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
@@ -34,6 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 import cn.bingoogolapple.refreshlayout.BGARefreshViewHolder;
+import de.blinkt.openvpn.core.VpnStatus;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -63,14 +67,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         int statusBarHeight = ScreenUtils.getStatusBarHeight(getActivity());
         int navigationBarHeight = ScreenUtils.getNavigationBarHeight();
         Logger.i("statusBarHeight="+statusBarHeight+", navigationBarHeight="+navigationBarHeight);
-        loadLocalApp();
+//        loadLocalApp();
+        refreshLayout.beginRefreshing();
         AppUtil.getNetIp();
+
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        refreshLayout.beginRefreshing();
+        adapter.notifyDataSetChanged();
     }
 
     private void initRefreshLayout() {
@@ -81,7 +94,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 Logger.i("refresh ..");
-//                loadAppList();
+                loadLocalApp();
             }
 
             @Override
@@ -97,10 +110,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
         adapter = new BaseQuickAdapter<AppInfo, BaseViewHolder>(R.layout.item_layout_home_app) {
             @Override
             protected void convert(BaseViewHolder helper, AppInfo item) {
-                helper.setText(R.id.app_name, item.getApplicationName());
+                boolean isAccelerate = VpnStatus.isVPNActive() && item.getBundleId().equals(TokenCache.getIns().getUseVpnPackageName());
+                helper.setText(R.id.app_name, item.getApplicationName())
+                .setText(R.id.accelerate_btn, isAccelerate ? "加速中" : "加速");
                 helper.addOnClickListener(R.id.accelerate_btn);
                 ImageView appIcon = helper.getView(R.id.app_icon);
-                appIcon.setImageDrawable(item.getAppDrawable());
+                appIcon.setImageDrawable(item.getAppDrawable().getDrawable());
 //                ImageLoad.loadImage(appIcon.getContext(), item.getApplicationIcon(),appIcon);
             }
         };
@@ -112,7 +127,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
                     Bundle bundle = new Bundle();
                     bundle.putString(AccelerateActivity.KEY_ACCELERATE_APP_NAME, item.getApplicationName());
                     bundle.putString(AccelerateActivity.KEY_ACCELERATE_APP_PACKAGE, item.getBundleId());
-//                    bundle.putSerializable(AccelerateActivity.KEY_ACCELERATE_APP_INFO,item);
+                    bundle.putSerializable(AccelerateActivity.KEY_ACCELERATE_APP_INFO,item);
                     AccelerateActivity.startMe(getActivity(), AccelerateActivity.class, bundle);
                 }
             }
@@ -151,23 +166,38 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding> {
     }
 
     private void loadData(List<AppInfo> appList){
-        adapter.setNewData(appList);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                refreshLayout.endRefreshing();
+                adapter.setNewData(appList);
+            }
+        });
+
+
     }
 
     private void loadLocalApp(){
-        refreshLayout.endRefreshing();
-        ArrayList<HashMap<String, Object>> appPackageItems = AppUtil.getAppPackageItems(getContext());
-        List<AppInfo> appList = new ArrayList<>();
-        for (int i = 0; i < appPackageItems.size(); i++) {
-            HashMap<String, Object> hashMap = appPackageItems.get(i);
-            AppInfo appInfo = new AppInfo();
-            Drawable appimage = (Drawable) hashMap.get("appimage");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<HashMap<String, Object>> appPackageItems = AppUtil.getAppPackageItems(getContext());
+                List<AppInfo> appList = new ArrayList<>();
+                for (int i = 0; i < appPackageItems.size(); i++) {
+                    HashMap<String, Object> hashMap = appPackageItems.get(i);
+                    AppInfo appInfo = new AppInfo();
+                    Drawable appimage = (Drawable) hashMap.get("appimage");
 //            AppDrawable appDrawable = new AppDrawable(appimage);
-            appInfo.setAppDrawable(appimage);
-            appInfo.setApplicationName(hashMap.get("appName").toString());
-            appInfo.setBundleId(hashMap.get("packageName").toString());
-            appList.add(appInfo);
-        }
-        loadData(appList);
+                    SeriDrawable seriDrawable = new SeriDrawable(appimage);
+                    appInfo.setAppDrawable(seriDrawable);
+                    appInfo.setApplicationName(hashMap.get("appName").toString());
+                    appInfo.setBundleId(hashMap.get("packageName").toString());
+                    appList.add(appInfo);
+                }
+                loadData(appList);
+            }
+        }).start();
+
+
     }
 }

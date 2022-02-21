@@ -123,6 +123,12 @@ public abstract class BaseVPNActivity<T extends ViewBinding> extends BaseActivit
     }
 
     @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         this.moveTaskToBack(true);
     }
@@ -162,7 +168,6 @@ public abstract class BaseVPNActivity<T extends ViewBinding> extends BaseActivit
             cp.parseConfig(bufferedReader);
             vp = cp.convertProfile();
             vp.mAllowedAppsVpnAreDisallowed = true;
-            vp.mKeyPassword = "huaitaosha";
             vp.mName = Build.MODEL;
             pm = ProfileManager.getInstance(BaseVPNActivity.this);
             pm.addProfile(vp);
@@ -375,12 +380,6 @@ public abstract class BaseVPNActivity<T extends ViewBinding> extends BaseActivit
 //                finish();
             }
         }
-    }
-
-    @Override
-    public void onDestroy() {
-
-        super.onDestroy();
     }
 
     // does not need

@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.buzz.vpn.R;
 import com.buzz.vpn.api.exception.ServerError;
@@ -141,6 +142,8 @@ public class BaseActivity<T extends ViewBinding> extends AppCompatActivity {
     public void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new MaterialDialog.Builder(this)
+                    .backgroundColor(R.color.backgroundColor)
+                    .contentGravity(GravityEnum.CENTER)
                     .progress(true, 0)
                     .cancelable(false)
                     .build();

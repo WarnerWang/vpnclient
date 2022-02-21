@@ -31,6 +31,7 @@ public class TokenCache {
     private static final String KEY_SPLASH_AD_BITMAP_FILE_PATH = "KEY_SPLASH_AD_BITMAP_FILE_PATH";//启动页广告图片本地路径
     private static final String KEY_SHOW_PRIVACY_AGREEMENT_INFO = "KEY_SHOW_PRIVACY_AGREEMENT_INFO";//是否显示过隐私权限弹窗
     private static final String KEY_SECRET_KEY = "KEY_SECRET_KEY";//接口DES密钥
+    private static final String KEY_CUR_USE_VPN_PACKAGE_NAME = "KEY_CUR_USE_VPN_PACKAGE_NAME";//当前使用vpn的应用包名
     private static final int TIME_MATCH_LEAGUE_COLOR_SAVE = 60 * 60 *24;//1天
     private static final int TIME_MATCH_LEAGUE_FILTER_SAVE = 60 * 60 *12;//12小时
     private static final int TIME_WECHAT_ACCESS_TOKEN_SAVE = 60 * 60; //1小时
@@ -398,6 +399,19 @@ public class TokenCache {
 
     public String getSecretKey(){
         return aCache.getAsString(KEY_SECRET_KEY);
+    }
+
+    // 当前使用vpn的应用包名
+    public void saveUseVpnPackageName(String packageName){
+        if (StringUtils.isEmpty(packageName)) {
+            aCache.remove(KEY_CUR_USE_VPN_PACKAGE_NAME);
+        }else {
+            aCache.put(KEY_CUR_USE_VPN_PACKAGE_NAME, packageName);
+        }
+    }
+
+    public String getUseVpnPackageName(){
+        return aCache.getAsString(KEY_CUR_USE_VPN_PACKAGE_NAME);
     }
 
 

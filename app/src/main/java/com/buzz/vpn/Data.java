@@ -10,5 +10,7 @@ public class Data {
     public static String StringCountDown;
     public static long LongDataUsage;
 
+    public static int connectSecond;
+
 
 }

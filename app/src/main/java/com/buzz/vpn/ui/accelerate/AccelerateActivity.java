@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +27,11 @@ import com.buzz.vpn.api.image.ImageLoad;
 import com.buzz.vpn.api.network.Api;
 import com.buzz.vpn.common.LongRunningService;
 import com.buzz.vpn.databinding.ActivityAccelerateBinding;
+import com.buzz.vpn.manager.IperfManager;
 import com.buzz.vpn.manager.UserManage;
 import com.buzz.vpn.ui.tabbar.TabBarActivity;
 import com.buzz.vpn.utils.AppUtil;
+import com.buzz.vpn.utils.DateUtil;
 import com.buzz.vpn.utils.Logger;
 import com.buzz.vpn.utils.StringUtils;
 import com.buzz.vpn.utils.ToastUtil;
@@ -38,12 +42,15 @@ import java.util.LinkedList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import de.blinkt.openvpn.BindStatus;
 import de.blinkt.openvpn.BindUtils;
 import com.buzz.vpn.base.BaseVPNActivity;
+import com.buzz.vpn.utils.TrafficStatsManager;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -252,6 +259,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
     private boolean needHttp = true;
 
     private Handler mHandler;
+    private Timer timer;
 
     public static void startMe(Context context) {
         Intent intent = new Intent(context, AccelerateActivity.class);
@@ -294,7 +302,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
         appInfo = (AppInfo) getIntent().getSerializableExtra(KEY_ACCELERATE_APP_INFO);
         if (appInfo != null) {
             if (appInfo.getAppDrawable() != null) {
-                viewBinding.accelerateAppIcon.setImageDrawable(appInfo.getAppDrawable());
+                viewBinding.accelerateAppIcon.setImageDrawable(appInfo.getAppDrawable().getDrawable());
             }else {
                 ImageLoad.loadImage(viewBinding.accelerateAppIcon.getContext(), appInfo.getApplicationIcon(),viewBinding.accelerateAppIcon);
             }
@@ -316,7 +324,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
                     }
                 }else {
                     if (VpnStatus.isVPNActive()) {
-                        stop_vpn();
+                        stopActivityVpn();
                     }else {
                         startActivityVpn();
                     }
@@ -324,17 +332,11 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
 
             }
         });
-        viewBinding.accelerateBefore.setText("0");
-        viewBinding.accelerateAfter.setText("0");
-//        appInfoTv = (TextView) findViewById(R.id.tv_app_info);
-//        appInfoTv.setText("当前允许加速APP为："+appName);
-//        textView = (TextView) findViewById(R.id.tv_log);
-//        textV = (TextView) findViewById(R.id.tv_running_status);
-
+        viewBinding.accelerateDown.setText("0");
+        viewBinding.accelerateUp.setText("0");
         mHandler = new Handler();
         mColourIn = getResources().getColor(R.color.line_in);
         mColourOut = getResources().getColor(R.color.line_out);
-//        mColourPoint = getActivity().getResources().getColor(android.R.color.black);
         List<Integer> charts = new LinkedList<>();
         charts.add(TIME_PERIOD_SECDONS);
 //        charts.add(TIME_PERIOD_MINUTES);
@@ -342,6 +344,90 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
 
         mChartAdapter = new ChartDataAdapter(this, charts);
         viewBinding.graphListview.setAdapter(mChartAdapter);
+
+        viewBinding.accelerateSpeedTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testSpeed(true);
+            }
+        });
+        if (VpnStatus.isVPNActive()) {
+            startTimer();
+        }
+    }
+
+    public void startTimer(){
+        if (timer != null) {
+            return;
+        }
+
+        Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if (timer == null) {
+                    return;
+                }
+                switch (msg.what) {
+                    case 200: {
+
+                        viewBinding.accelerateTime.setText(DateUtil.secToTime(Data.connectSecond));
+                    }
+                    break;
+                }
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.sendEmptyMessage(200);
+            }
+        }, 0, 1000);
+    }
+
+    public void testSpeed(boolean down){
+        showProgressDialog();
+        IperfManager.sendIperf(down,new IperfManager.OnIperfRequestResultListener() {
+            @Override
+            public void onSuccess() {
+                Logger.i("success");
+            }
+
+            @Override
+            public void onError(String e) {
+                Logger.i("error"+e);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismissDialog();
+                        ToastUtil.ins().show("error="+e, true);
+                    }
+                });
+            }
+
+            @Override
+            public void onUpdate(String s) {
+                Logger.i("update="+s);
+            }
+
+            @Override
+            public void onResult(String result) {
+                Logger.i("testSpeed result="+result);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismissDialog();
+                        if (down) {
+                            testSpeed(false);
+                            viewBinding.localDown.setText(result);
+                        }else {
+                            viewBinding.localUp.setText(result);
+                        }
+                    }
+                });
+            }
+        });
     }
 
     public void startActivityVpn(){
@@ -353,6 +439,19 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
         allowApp.add(packageName);
         getVpnProfile().mAllowedAppsVpn=allowApp;
         startVpn();
+        startTimer();
+        TokenCache.getIns().saveUseVpnPackageName(packageName);
+    }
+
+
+    public void stopActivityVpn(){
+        TokenCache.getIns().saveUseVpnPackageName(null);
+        stop_vpn();
+        Data.connectSecond = 0;
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = null;
     }
 
     private Runnable triggerRefresh = new Runnable() {
@@ -377,10 +476,12 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
 
     private void updateStartBtn(){
         if (VpnStatus.isVPNActive()) {
+            viewBinding.accelerateTime.setVisibility(View.VISIBLE);
             viewBinding.accelerateBtn.setText("停止加速");
             viewBinding.accelerateBtn.setSolidColor(R.color.transparent);
             viewBinding.accelerateBtn.setBorderColor(R.color.border_color);
         }else {
+            viewBinding.accelerateTime.setVisibility(View.INVISIBLE);
             viewBinding.accelerateBtn.setText("加速");
             viewBinding.accelerateBtn.setSolidColor(R.color.btn_color);
             viewBinding.accelerateBtn.setBorderColor(R.color.transparent);
@@ -450,16 +551,13 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
     @Override
     public void updateByteCount(long ins, long outs, long diffIn, long diffOut) {
         final long Total = ins + outs;
-        String usage = "";
-        if (Total < 1000) {
-            usage = "1KB";
-        } else if ((Total >= 1000) && (Total <= 1000_000)) {
-            usage = (Total / 1000) + "KB";
-        } else {
-            usage = (Total / 1000_000) + "MB";
-        }
+        String totalByteString = StringUtils.formatByte(Total);
+
+        String downByteString = StringUtils.formatByte(diffIn);
+        String upByteString = StringUtils.formatByte(diffOut);
+
         Logger.i("total usage = "+ Data.LongDataUsage);
-        appUsage = usage;
+        appUsage = totalByteString;
         if (firstTs == 0)
             firstTs = System.currentTimeMillis() / 100;
 
@@ -476,14 +574,21 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
                 diffInStr,
                 out,
                 diffOutStr);
+        TrafficStatsManager.getIns().updateNetSpeed();
+        String localDownByteString = StringUtils.formatByte(TrafficStatsManager.getIns().getDownSpeed());
+        String localUpByteString = StringUtils.formatByte(TrafficStatsManager.getIns().getUpSpeed());
+        Logger.i("vpn downByteString="+downByteString+", upByteString="+upByteString);
+        Logger.i("local downByteString="+localDownByteString+", upByteString="+localUpByteString);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 //                textV.setText("当前消耗流量："+appUsage);
                 mHandler.removeCallbacks(triggerRefresh);
                 viewBinding.accelerateUsage.setText(appUsage);
-                viewBinding.accelerateBefore.setText(in);
-                viewBinding.accelerateAfter.setText(out);
+                viewBinding.accelerateDown.setText(downByteString);
+                viewBinding.accelerateUp.setText(upByteString);
+//                viewBinding.localDown.setText("↓:"+localDownByteString);
+//                viewBinding.localUp.setText("↑:"+localUpByteString);
                 mChartAdapter.notifyDataSetChanged();
                 mHandler.postDelayed(triggerRefresh, OpenVPNManagement.mBytecountInterval * 1500);
             }
@@ -494,6 +599,10 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
     public void onDestroy() {
         BindUtils.unBind(this);
         super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = null;
     }
 
     @Override
@@ -506,7 +615,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
 
     private void accelerateApply(boolean needReRequest){
         AccelerateApplyReq req = new AccelerateApplyReq();
-        req.setApplicationInfoId(appInfo == null ? "1" : appInfo.getApplicationInfoId());
+        req.setApplicationInfoId((appInfo == null || StringUtils.isEmpty(appInfo.getApplicationInfoId())) ? "1" : appInfo.getApplicationInfoId());
         req.setMobile(UserManage.ins().getUserInfo().getPhone());
         req.setPrivateIp(AppUtil.getLocalIPAddress());
         req.setPublicIp(TokenCache.getIns().getNetIpAddress());
@@ -516,6 +625,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
         targetIpList.add("47.95.115.11");
 //        targetIpList.add(appInfo.getTargetIp());
         req.setTargetIp(targetIpList);
+        showProgressDialog();
         Subscription subscription = Api.ins()
                 .getAppAPI()
                 .accelerateApply(req)
@@ -533,6 +643,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
                         if (e.getMessage().contains("重复")) {
                             accelerateDelete(true);
                         }else {
+                            dismissDialog();
                             ToastUtil.ins().show(e.getMessage());
                         }
                     }
@@ -540,6 +651,7 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
                     @Override
                     public void onNext(AccelerateApplyResp resp) {
                         startActivityVpn();
+                        dismissDialog();
                     }
                 });
         addSubscription(subscription);
@@ -547,9 +659,12 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
 
     private void accelerateDelete(boolean needReRequest){
         AccelerateDeleteReq req = new AccelerateDeleteReq();
-        req.setApplicationInfoId(appInfo == null ? "1" : appInfo.getApplicationInfoId());
+        req.setApplicationInfoId((appInfo == null || StringUtils.isEmpty(appInfo.getApplicationInfoId())) ? "1" : appInfo.getApplicationInfoId());
         req.setApplyOrderId("");
         req.setMobile(UserManage.ins().getUserInfo().getPhone());
+        if (!needReRequest) {
+            showProgressDialog();
+        }
         Subscription subscription = Api.ins()
                 .getAppAPI()
                 .accelerateDelete(req)
@@ -564,11 +679,14 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
 
                     @Override
                     public void onError(Throwable e) {
+                        dismissDialog();
                         ToastUtil.ins().show(e.getMessage());
                     }
 
                     @Override
                     public void onNext(BaseResp resp) {
+                        dismissDialog();
+                        stopActivityVpn();
                         if (needReRequest) {
                             accelerateApply(false);
                         }
@@ -599,12 +717,14 @@ public class AccelerateActivity extends BaseVPNActivity<ActivityAccelerateBindin
                         R.layout.graph_item, parent, false);
                 holder.chart = (LineChart) convertView.findViewById(R.id.chart);
                 holder.title = (TextView) convertView.findViewById(R.id.tvName);
+                holder.title.setTextColor(getResources().getColor(R.color.colorWhite));
                 convertView.setTag(holder);
 
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
+            mTextColour = getResources().getColor(R.color.colorWhite);
             // apply styling
             // holder.chart.setValueTypeface(mTf);
             holder.chart.getDescription().setEnabled(false);

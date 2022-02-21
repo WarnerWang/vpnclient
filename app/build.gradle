@@ -123,8 +123,10 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     //测试SDK 需要的包
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+//    implementation 'com.google.code.gson:gson:2.8.5'
+//    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    implementation "com.synaptic-tools:iperf:1.0.0"
 }
 apply plugin: 'com.google.gms.google-services'

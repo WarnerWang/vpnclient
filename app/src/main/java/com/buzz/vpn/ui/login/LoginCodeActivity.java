@@ -76,6 +76,15 @@ public class LoginCodeActivity extends BaseActivity<ActivityLoginCodeBinding> {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+        timer = null;
+    }
+
     private void sendCode(){
         GetSmsCodeReq req = new GetSmsCodeReq();
         req.setPhone(loginMobile);
@@ -128,6 +137,8 @@ public class LoginCodeActivity extends BaseActivity<ActivityLoginCodeBinding> {
                         if (resendBtn == null) {
                             return;
                         }
+                        timer.cancel();
+                        timer = null;
                         resendBtn.setText("重新发送");
                         resendBtn.setTextColor(Color.parseColor("#0296F8"));
                     }

@@ -335,7 +335,8 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                         Log.e("random", Random + " " + Random*1000);
 
                     }
-
+//                    VpnStatus.logInfo("millisUntilFinished="+(86400_000-millisUntilFinished));
+                    Data.connectSecond = (int)(86400_000-millisUntilFinished)/1000;
                     if(abortConnectionVPN){
                         try {
                             ConnectionTimer.cancel();
@@ -359,7 +360,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
 
 
-
+        
 
 
 
