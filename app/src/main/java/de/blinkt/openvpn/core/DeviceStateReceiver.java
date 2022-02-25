@@ -13,7 +13,7 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Handler;
 
-import com.buzz.vpn.R;
+import com.hxjg.vpn.R;
 
 import java.util.LinkedList;
 

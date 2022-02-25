@@ -33,7 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@mipmap/placeholder"/>
 
-            <com.buzz.vpn.widge.WJTextView
+            <com.hxjg.vpn.widge.WJTextView
                 android:id="@+id/accelerate_btn"
                 android:layout_width="70dp"
                 android:layout_height="30dp"
@@ -372,7 +372,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-            <com.buzz.vpn.widge.WJTextView
+            <com.hxjg.vpn.widge.WJTextView
                 android:id="@+id/accelerate_speed_test"
                 android:layout_width="70dp"
                 android:layout_height="30dp"

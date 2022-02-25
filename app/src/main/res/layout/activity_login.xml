@@ -29,7 +29,7 @@
         android:numeric="integer"
         android:background="#333333"/>
     
-    <com.buzz.vpn.widge.WJTextView
+    <com.hxjg.vpn.widge.WJTextView
         android:id="@+id/send_code_btn"
         android:layout_width="match_parent"
         android:layout_height="45dp"

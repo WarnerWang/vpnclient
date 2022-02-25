@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.buzz.vpn.R;
+import com.hxjg.vpn.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

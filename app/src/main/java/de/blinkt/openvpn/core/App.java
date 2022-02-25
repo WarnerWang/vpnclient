@@ -3,7 +3,6 @@
  * Distributed under the GNU GPL v2 with additional terms. For full terms see the file doc/LICENSE.txt
  */
 package de.blinkt.openvpn.core;
-import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.SharedPreferences;
@@ -13,7 +12,7 @@ import android.os.Build;
 
 import android.util.Log;
 
-import com.buzz.vpn.R;
+import com.hxjg.vpn.R;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -30,7 +29,7 @@ public class App extends /*com.orm.SugarApp*/ MultiDexApplication {
     public static boolean ShowDailyUsage = true;
     public static String device_id;
     public static long device_created;
-    public static final String CHANNEL_ID = "COM.BUZZ.VPN";
+    public static final String CHANNEL_ID = "com.hxjg.vpn";
     public static final int NOTIFICATION_ID = new Random().nextInt(601) + 200;
     NotificationManager manager;
 
@@ -70,7 +69,7 @@ public class App extends /*com.orm.SugarApp*/ MultiDexApplication {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel serviceChannel = new NotificationChannel(
                         CHANNEL_ID,
-                        "COMBUZZVPN",
+                        "COMHXJGVPN",
                         NotificationManager.IMPORTANCE_LOW
                 );
 

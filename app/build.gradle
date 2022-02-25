@@ -3,15 +3,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'io.fabric'
 android {
-    compileSdkVersion 32
+    compileSdkVersion 30
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled = true
     }
     defaultConfig {
-        applicationId "com.buzz.vpn"
+        applicationId "com.hxjg.vpn"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 30
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         // api.major.patch
@@ -128,5 +129,14 @@ dependencies {
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     implementation "com.synaptic-tools:iperf:1.0.0"
+
+    implementation "com.wireguard.android:tunnel:1.0.20211029"
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.1.5"
+//    annotationProcessor 'com.google.dagger:dagger-compiler:2.14.1'
+//    implementation 'com.google.dagger:dagger:2.14.1'
 }
 apply plugin: 'com.google.gms.google-services'
+
+//configurations {
+//    all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+//}

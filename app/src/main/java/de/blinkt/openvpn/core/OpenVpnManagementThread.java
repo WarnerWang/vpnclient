@@ -12,7 +12,7 @@ import android.os.Handler;
 import android.os.ParcelFileDescriptor;
 import androidx.annotation.NonNull;
 
-import com.buzz.vpn.R;
+import com.hxjg.vpn.R;
 
 //import junit.framework.Assert;
 

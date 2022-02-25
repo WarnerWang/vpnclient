@@ -29,7 +29,7 @@
             android:text="应用名称"
             android:gravity="center_horizontal"/>
 
-        <com.buzz.vpn.widge.WJTextView
+        <com.hxjg.vpn.widge.WJTextView
             android:id="@+id/accelerate_btn"
             android:layout_width="70dp"
             android:layout_height="30dp"

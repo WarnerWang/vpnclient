@@ -25,7 +25,7 @@ import android.os.ParcelFileDescriptor;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 
-import com.buzz.vpn.R;
+import com.hxjg.vpn.R;
 
 import java.io.IOException;
 import java.io.StringReader;

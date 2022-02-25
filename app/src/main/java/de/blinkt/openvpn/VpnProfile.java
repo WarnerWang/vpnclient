@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.buzz.vpn.R;
+import com.hxjg.vpn.R;
 
 import org.spongycastle.util.io.pem.PemObject;
 import org.spongycastle.util.io.pem.PemWriter;

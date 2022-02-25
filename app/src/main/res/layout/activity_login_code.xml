@@ -37,7 +37,7 @@
         android:layout_marginTop="32dp"
         android:textColor="@color/btn_color"/>
 
-    <com.buzz.vpn.widge.WJTextView
+    <com.hxjg.vpn.widge.WJTextView
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="45dp"

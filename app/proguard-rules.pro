@@ -73,7 +73,7 @@
 -keep public class * extends android.view.View
 
 # bean类不混淆
--keep public class com.buzz.vpn.api.**{*;}
+-keep public class com.hxjg.vpn.api.**{*;}
 
 
 #support.v4/v7包不混淆

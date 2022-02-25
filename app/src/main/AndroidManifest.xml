@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.buzz.vpn">
+    package="com.hxjg.vpn">
 
     <application
         android:name="de.blinkt.openvpn.core.App"
@@ -12,7 +12,7 @@
         android:resizeableActivity="true"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.splash.LaunchActivity"
+            android:name="com.hxjg.vpn.ui.splash.LaunchActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
@@ -47,33 +47,33 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ServerActivity"
+        <activity android:name="com.hxjg.vpn.ServerActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".UsageActivity"
+        <activity android:name="com.hxjg.vpn.UsageActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ContactActivity"
+        <activity android:name="com.hxjg.vpn.ContactActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".WelcomeActivity"
+        <activity android:name="com.hxjg.vpn.WelcomeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".FAQActivity"
+        <activity android:name="com.hxjg.vpn.FAQActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ReviewActivity"
+        <activity android:name="com.hxjg.vpn.ReviewActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.accelerate.AccelerateActivity"
+        <activity android:name="com.hxjg.vpn.ui.accelerate.AccelerateActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.login.LoginActivity"
+        <activity android:name="com.hxjg.vpn.ui.login.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.login.LoginCodeActivity"
+        <activity android:name="com.hxjg.vpn.ui.login.LoginCodeActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.tabbar.TabBarActivity"
+        <activity android:name="com.hxjg.vpn.ui.tabbar.TabBarActivity"
             android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
 
-        <receiver android:name=".common.AlarmReceiver"></receiver>
+        <receiver android:name="com.hxjg.vpn.common.AlarmReceiver"></receiver>
 
         <service
             android:name="de.blinkt.openvpn.core.OpenVPNService"
@@ -91,7 +91,7 @@
                 <action android:name="de.blinkt.openvpn.api.IOpenVPNAPIService" />
             </intent-filter>
         </service>
-        <service android:name=".common.LongRunningService"></service>
+        <service android:name="com.hxjg.vpn.common.LongRunningService"></service>
     </application>
     <supports-screens
         android:anyDensity="true"
